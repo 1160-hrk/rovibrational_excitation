@@ -47,10 +47,11 @@ class ElectricField:
         E_freq = fft(field)
         phase = np.where(
             freq >= 0,
-            np.exp(-1j * np.pi * self.gdd * (2*pi*freq - self.omega)**2 + self.tod * (2*np.pi*freq - self.omega)**3),
-            np.exp(+1j * np.pi * self.gdd * (2*pi*freq + self.omega)**2 + self.tod * (2*np.pi*freq + self.omega)**3)  
+            (np.pi * self.gdd * (2*pi*freq - self.omega)**2 + self.tod * (2*np.pi*freq - self.omega)**3),
+            (-np.pi * self.gdd * (2*pi*freq + self.omega)**2 + self.tod * (2*np.pi*freq + self.omega)**3)  
         )
-        E_freq_disp = E_freq * phase
+        phase = np.clip(phase, -1e4, 1e4)  # 位相のクリッピング
+        E_freq_disp = E_freq * np.exp(-1j * phase)
         self.E_complex = ifft(E_freq_disp)
         self.E_real = np.real(self.E_complex)  # 実部も保存
 
