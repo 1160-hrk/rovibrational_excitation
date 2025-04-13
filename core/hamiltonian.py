@@ -1,8 +1,8 @@
 # hamiltonian.py
 import numpy as np
-from core.basis import VJMBasis
-from core.states import StateVector, DensityMatrix
-from core.electric_field import ElectricField
+from .basis import VJMBasis
+# from .states import StateVector, DensityMatrix
+# from .electric_field import ElectricField
 from typing import Callable
 
 
